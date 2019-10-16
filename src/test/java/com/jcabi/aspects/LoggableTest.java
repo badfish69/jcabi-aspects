@@ -250,7 +250,6 @@ public final class LoggableTest {
          * @return Some text
          * @throws Exception If terminated
          */
-        @Timeable(limit = 1, unit = TimeUnit.HOURS)
         public static String text() throws Exception {
             TimeUnit.SECONDS.sleep(2L);
             return LoggableTest.Foo.hiddenText();
@@ -269,7 +268,6 @@ public final class LoggableTest {
          * @param text Some text
          * @return Reverted text
          */
-        @Timeable
         @Loggable(value = Loggable.INFO, trim = false)
         public String revert(final String text) {
             return new StringBuffer(text).reverse().toString();

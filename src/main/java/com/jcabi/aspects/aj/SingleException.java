@@ -29,7 +29,6 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.UnitedThrow;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -46,7 +45,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @since 0.13
  */
 @Aspect
-@Immutable
 public final class SingleException {
 
     /**

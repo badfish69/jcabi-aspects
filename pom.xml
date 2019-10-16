@@ -32,41 +32,26 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.jcabi</groupId>
-        <artifactId>jcabi</artifactId>
-        <version>1.21</version>
-    </parent>
-    <artifactId>jcabi-aspects</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.idslns</groupId>
+    <artifactId>jcabi-logging-aspects</artifactId>
+    <version>1.0</version>
     <packaging>bundle</packaging>
-    <name>jcabi-aspects</name>
+    <name>jcabi-logging-aspects</name>
     <description>Collection of convenient and useful Java annotations</description>
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/jcabi/jcabi-aspects/issues</url>
-    </issueManagement>
-    <ciManagement>
-        <system>rultor</system>
-        <url>http://www.rultor.com/s/jcabi</url>
-    </ciManagement>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <scm>
-        <connection>scm:git:github.com:jcabi/jcabi-aspects.git</connection>
-        <developerConnection>scm:git:github.com:jcabi/jcabi-aspects.git</developerConnection>
-        <url>https://github.com/jcabi/jcabi-aspects</url>
+        <connection>scm:git:github.com:badfish69/jcabi-aspects.git</connection>
+        <developerConnection>scm:git:github.com:badfish69/jcabi-aspects.git</developerConnection>
+        <url>https://github.com/badfish69/jcabi-aspects</url>
     </scm>
-    <distributionManagement>
-        <site>
-            <id>aspects.jcabi.com</id>
-            <url>https://github.com/jcabi/jcabi-aspects</url>
-        </site>
-    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-log</artifactId>
             <!-- version is set in order to avoid a cyclic reference -->
-            <version>0.17</version>
+            <version>0.18</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.jcabi</groupId>
@@ -78,32 +63,54 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <scope>compile</scope>
-            <version>1.8.7</version>
+            <version>1.8.13</version>
+        </dependency>
+        <!-- Junit/Mockito for testing -->
+        <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.12</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <scope>compile</scope>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+          <version>2.1</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.3.0.Alpha1</version>
-            <scope>test</scope>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-library</artifactId>
+          <version>2.1</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>3.0.1-b04</version>
-            <scope>test</scope>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-core</artifactId>
+          <version>3.1.0</version>
+          <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>2.2.6</version>
-            <scope>test</scope>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+          <version>1.7.28</version>
+          <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+      <repository>
+        <id>nexus</id>
+        <name>Releases</name>
+        <url>https://nexus.mel.int/repository/maven-releases/</url>
+      </repository>
+      <snapshotRepository>
+        <id>nexus</id>
+        <name>Snapshot</name>
+        <url>https://nexus.mel.int/repository/maven-snapshots/</url>
+      </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -128,7 +135,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.11</version>
                 <configuration>
                     <complianceLevel>1.6</complianceLevel>
                     <source>1.6</source>
@@ -178,78 +185,34 @@
                 <version>3.0.0</version>
                 <extensions>true</extensions>
             </plugin>
+            <plugin>
+              <!--
+              This plugin will collect current build number
+              from Git and save it into Maven property
+              -->
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>buildnumber-maven-plugin</artifactId>
+              <version>1.4</version>
+              <executions>
+                <execution>
+                  <id>jcabi-build-number</id>
+                  <phase>initialize</phase>
+                  <goals>
+                    <goal>create</goal>
+                    <goal>create-timestamp</goal>
+                  </goals>
+                  <configuration>
+                    <buildNumberPropertyName>buildNumber</buildNumberPropertyName>
+                    <timestampPropertyName>timestamp</timestampPropertyName>
+                    <timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ss}</timestampFormat>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                    <shortRevisionLength>7</shortRevisionLength>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>qulice</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.qulice</groupId>
-                        <artifactId>qulice-maven-plugin</artifactId>
-                        <configuration>
-                            <excludes combine.children="append">
-                                <exclude>checkstyle:/src/it/.*</exclude>
-                                <exclude>checkstyle:/src/site/apt/.*</exclude>
-                                <exclude>pmd:/src/it/.*</exclude>
-                                <exclude>findbugs:.*</exclude>
-                                <exclude>xml:/src/it/settings.xml</exclude>
-                                <exclude>checkstyle:\\src\\it\\.*</exclude>
-                                <exclude>checkstyle:\\src\\site\\apt\\.*</exclude>
-                                <exclude>pmd:\\src\\it\\.*</exclude>
-                                <exclude>findbugs:.*</exclude>
-                                <exclude>xml:\\src\\it\\settings.xml</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>coveralls</id>
-            <!-- It doesn't work because cobertura is disabled, see above -->
-            <!--
-            <activation>
-                <file><exists>pom.xml</exists></file>
-            </activation>
-            -->
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>cobertura-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>site</phase>
-                                <goals>
-                                    <goal>cobertura</goal>
-                                </goals>
-                                <configuration>
-                                    <format>xml</format>
-                                    <maxmem>256m</maxmem>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.eluder.coveralls</groupId>
-                        <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>4.1.0</version>
-                        <executions>
-                            <execution>
-                                <phase>site</phase>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                                <configuration>
-                                    <repoToken>${coveralls.token.aspects}</repoToken>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

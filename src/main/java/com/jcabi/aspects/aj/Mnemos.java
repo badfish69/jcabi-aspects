@@ -29,7 +29,6 @@
  */
 package com.jcabi.aspects.aj;
 
-import com.jcabi.aspects.Immutable;
 import com.jcabi.log.Logger;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -42,7 +41,6 @@ import org.aspectj.lang.reflect.MethodSignature;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  */
-@Immutable
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidUsingShortType" })
 final class Mnemos {
 
