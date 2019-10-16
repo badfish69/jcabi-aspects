@@ -48,16 +48,9 @@
     </scm>
     <dependencies>
         <dependency>
-            <groupId>com.jcabi</groupId>
+            <groupId>com.idslns</groupId>
             <artifactId>jcabi-log</artifactId>
-            <!-- version is set in order to avoid a cyclic reference -->
-            <version>0.18</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.jcabi</groupId>
-                    <artifactId>jcabi-aspects</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
