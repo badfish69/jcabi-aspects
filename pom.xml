@@ -131,19 +131,20 @@
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.11</version>
                 <configuration>
-                    <complianceLevel>1.6</complianceLevel>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <complianceLevel>1.8</complianceLevel>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <deprecation>true</deprecation>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showWeaveInfo>false</showWeaveInfo>
                     <forceAjcCompile>true</forceAjcCompile>
-                    <verbose>false</verbose>
+                    <verbose>true</verbose>
                     <Xlint>warning</Xlint>
                     <argumentFileName>builddef-${project.name}.lst</argumentFileName>
                     <excludes>
                         <exclude>**/package-info.java</exclude>
                     </excludes>
+                    <Xlint>adviceDidNotMatch=ignore,canNotImplementLazyTjp=ignore</Xlint>
                 </configuration>
                 <dependencies>
                   <dependency>
