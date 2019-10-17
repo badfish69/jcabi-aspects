@@ -40,6 +40,7 @@
     <description>Collection of convenient and useful Java annotations</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <aspectj.version>1.9.4</aspectj.version>
     </properties>
     <scm>
         <connection>scm:git:github.com:badfish69/jcabi-aspects.git</connection>
@@ -56,7 +57,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <scope>compile</scope>
-            <version>1.8.13</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <!-- Junit/Mockito for testing -->
         <dependency>
@@ -135,7 +136,7 @@
                     <target>1.6</target>
                     <deprecation>true</deprecation>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <showWeaveInfo>true</showWeaveInfo>
+                    <showWeaveInfo>false</showWeaveInfo>
                     <forceAjcCompile>true</forceAjcCompile>
                     <verbose>false</verbose>
                     <Xlint>warning</Xlint>
@@ -144,6 +145,13 @@
                         <exclude>**/package-info.java</exclude>
                     </excludes>
                 </configuration>
+                <dependencies>
+                  <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjtools</artifactId>
+                    <version>${aspectj.version}</version>
+                  </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>jcabi-weave-classes</id>
