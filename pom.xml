@@ -40,7 +40,7 @@
     <description>Collection of convenient and useful Java annotations</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <aspectj.version>1.9.4</aspectj.version>
+        <aspectj.version>1.9.2</aspectj.version>
     </properties>
     <scm>
         <connection>scm:git:github.com:badfish69/jcabi-aspects.git</connection>
@@ -54,7 +54,7 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId>
+            <groupId>com.idslns.bundles.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <scope>compile</scope>
             <version>${aspectj.version}</version>
@@ -186,6 +186,17 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>3.0.0</version>
                 <extensions>true</extensions>
+                <configuration>
+                  <instructions>
+                    <Import-Package>
+                        org.aspectj.lang;version="${aspectj.version}",
+                        org.aspectj.lang.annotation;version="${aspectj.version}",
+                        org.aspectj.lang.reflect;version="${aspectj.version}",
+                        org.aspectj.runtime.internal;version="${aspectj.version}",
+                      *
+                    </Import-Package>
+                  </instructions>
+                </configuration>
             </plugin>
             <plugin>
               <!--
